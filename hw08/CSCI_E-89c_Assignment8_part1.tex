@@ -1,0 +1,109 @@
+\documentclass[12pt]{letter}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+%\pagestyle{empty}
+\textwidth=6.1in \textheight=24cm \voffset=-3.7cm
+\oddsidemargin=3.6mm
+\usepackage{graphicx}
+\pagestyle{empty}
+
+\usepackage{enumerate}
+\usepackage{setspace}
+\usepackage[table]{xcolor}
+\usepackage{bbm}
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+
+
+\begin{document}
+\begin{flushleft}
+{\sc Name: Karma Tarap}\\
+CSCI E-89c Deep Reinforcement Learning\\
+Part I of Assignment 8\\
+\end{flushleft}
+
+Please consider a Markov Decision Process (MDP) with  $\mathcal{S}=\{s^{A},s^{B},s^{C}\}$.\medskip\\
+Given a particular state $s\in \mathcal{S}$, the agent is allowed to either try staying there or switching to any of the other states. Let's denote an intention to move to state $s^A$ by $a^A$, to state $s^B$ by $a^B$, and to state $s^C$ by $a^C$. The agent does not know transition probabilities, including the distributions of rewards. There is, however, some evidence that the agent gets rewards only at the entrance to $s^{C}$; and transition MDP probabilities to/from $s^{A}$ appear to be same (or nearly same) as to/from $s^{B}$. 
+
+Suppose the agent chooses policy $\pi(a^A|s)=0.05$, $\pi(a^B|s)=0.05$, $\pi(a^C|s)=0.90$ for all $s\in\{s^A,s^B,s^C\}$. Because of the apparent symmetry between $s^A$ and $s^B$, it makes sense to assume that $v_\pi(s^A) \approx v_\pi(s^B)$ and approximate the state-values as follows:
+$$v_\pi(s)\approx\hat{v}(s,{\bf w}) = w_1\cdot \mathbbm{1}_{(s=s_A)} + w_1\cdot \mathbbm{1}_{(s=s_B)} + w_2\cdot \mathbbm{1}_{(s=s_C)}.$$ 
+
+Please notice that $\hat{v}(s^A,{\bf w})=\hat{v}(s^B,{\bf w})$ for any choice of weights.
+
+Assume the agent runs the TD($\lambda$) with Approximation for estimating $v_\pi$:
+
+\begin{equation*}
+\begin{aligned}
+{\bf z}_{-1} \doteq & (0,0)^T,\\
+{\bf z}_t\doteq & \gamma \lambda {\bf z}_{t-1}+\nabla \hat{v}(S_t,{\bf w}_t) ~~\text{for}~ t\geq 0,\\
+{\bf w}_{t+1}\doteq & {\bf w}_t+ \alpha \left[R_{t+1}+ \gamma \hat{v}(S_{t+1},{\bf w}_t) - \hat{v}(S_{t},{\bf w}_t)\right]{\bf z}_t ~~\text{for}~ t\geq 0,
+\end{aligned}
+\end{equation*}
+
+where $\lambda=0.2$, $\alpha=0.1$, $\gamma=0.9$, and weights ${\bf w}_t$ are set to zero at time $t=0$.
+
+If the agent observes the following sequence of states, actions, and rewards:
+{\small
+\begin{equation*}
+\begin{aligned}
+&S_0=s^A,A_0=a^C,R_1=20,\\
+&S_1=s^C,A_1=a^B,R_2=0,\\
+&S_2=s^B,A_2=a^C,R_3=20,\\
+&S_3=s^C,A_3=a^C,R_4=20,\\
+&S_4=s^C,A_4=a^B,R_5=0,\\
+&S_5=s^B,
+\end{aligned}
+\end{equation*}
+find (a) weights ${\bf w}_t$ and (b) corresponding approximations $\hat{v}(s,{\bf w}_t)$ for $t =1,2,\ldots,5$. Specifically, please fill the tables in below:\medskip\\
+SOLUTION:\vspace{-0.4cm}
+
+
+Gradient is: 
+$\nabla \hat{v}(S_t,{\bf w}_t)=(\mathbbm{1}_{(s=s_A)}+\mathbbm{1}_{(s=s_B)},\mathbbm{1}_{(s=s_C)})^T,$
+
+
+
+\begin{enumerate}[(a)]
+\item weights ${\bf w}_t=(w_{1,t},w_{2,t})^T$:
+{\doublespacing
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c| }
+\hline
+  & $t=0$ & $t=1$ & $t=2$ & $t=3$ & $t=4$ & $t=5$\\
+	\hline
+	$w_{1,t}$ & 0 & 2 & 2.032 & 3.904 & 4.275 & 4.279\\
+	\hline
+	$w_{2,t}$ & 0 & 0 & 0.18 & 0.506 & 2.566 & 2.718\\
+\hline
+\end{tabular}
+\end{center}
+}
+\newpage
+\item approximations $\hat{v}(s,{\bf w}_t)$:
+{\doublespacing
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c| }
+\hline
+  & $t=0$ & $t=1$ & $t=2$ & $t=3$ & $t=4$ & $t=5$\\
+	\hline
+	$\hat{v}(s^A,{\bf w}_t)$ & 0 & 2 & 2.032 & 3.904 & 4.275 & 4.279\\
+	\hline
+	$\hat{v}(s^B,{\bf w}_t)$ & 0 & 2 & 2.032 & 3.904 & 4.275 & 4.279\\
+	\hline
+	$\hat{v}(s^C,{\bf w}_t)$ & 0 & 0 & 0.18 & 0.506 & 2.566 & 2.718\\
+\hline
+\end{tabular}
+\end{center}
+}
+\end{enumerate}
+
+
+
+
+
+
+
+\end{document}

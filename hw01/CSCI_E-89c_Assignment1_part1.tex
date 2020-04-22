@@ -1,0 +1,34 @@
+\documentclass[12pt]{letter}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+%\pagestyle{empty}
+\textwidth=6.1in \textheight=24cm \voffset=-3.7cm
+\oddsidemargin=3.6mm
+\usepackage{graphicx}
+\pagestyle{empty}
+
+\usepackage{enumerate}
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+
+
+\begin{document}
+\begin{flushleft}
+{\sc Name: Karma Tarap \\
+CSCI E-89c Deep Reinforcement Learning\\
+Part I of Assignment 1\\}
+\end{flushleft}
+
+Suppose we run an $\varepsilon$-greedy algorithm for the $k$-armed Bandit problem, where $\varepsilon\in (0,1)$. Assuming $q_*(a_1)\neq q_*(a_2)$ for all $a_1\neq a_2$, where  $a_1,a_2\in \{1,2,\ldots,k\}$, please express
+$$\lim_{t\to\infty} \E\left[R_t \right]$$
+in terms of $\varepsilon$ and $q_*(a)$, $a\in \{1,2,\ldots,k\}$.\medskip\\
+SOLUTION:
+
+\[\sum_{i=a}^k q_*(a) P(A_t = a) \varepsilon + (1-\varepsilon) argmax(A)q_*(a)\]
+
+ 
+
+\end{document}
