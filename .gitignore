@@ -1,4 +1,6 @@
 Deep*
+Reinforcement*
 *.log
 *.tex
 *.gz
+*.pkl
